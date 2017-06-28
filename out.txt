@@ -1,0 +1,8 @@
+bibid	context	delta	value
+10450364	record	-	
+5254678	008	-	720204s1965    nyu           000 0 eng d
+5254678	008	+	720204s1965    nyu           000 0 fre d
+5254678	300	-	  ax, 212 p.c22 cm.
+13044680	ldr/7	-	m
+13044680	ldr/7	+	s
+13044680	650	+	 0aChildren's stories.
