@@ -10,6 +10,7 @@
 file1 = 'first.mrc'
 file2 = 'second.mrc'
 outfile = 'out.txt'
+exclude_leader = False
 exclude = ['901', '902', '905', '907']
 
 f1 = open(file1, 'r')
@@ -72,8 +73,8 @@ def diff_fields(r1, r2, exclude):
         if f in f2:
             comm.append(f)
     for f in comm:
-        f1.remove(f)
-        f2.remove(f)
+        while f in f1: f1.remove(f)
+        while f in f2: f2.remove(f)
     for f in f1:
         d.append((f[0], '-', f[1]))
     for f in f2:
@@ -104,11 +105,13 @@ for b in diff_r['+']:
 for b in diff_r[' ']:
     r1 = d1[b]
     r2 = d2[b]
-    diff_l = diff_leader(r1, r2)
-    if diff_l:
-        for k, v in diff_l.iteritems():
-            out.write(format_output(b, 'ldr/' + str(k), '-', str(v[0])))
-            out.write(format_output(b, 'ldr/' + str(k), '+', str(v[1])))
+	#allow complete exclusion of leader to reduce clutter in first-pass tests
+    if not exclude_leader:
+        diff_l = diff_leader(r1, r2)
+        if diff_l:
+        	for k, v in diff_l.iteritems():
+        		out.write(format_output(b, 'ldr/' + str(k), '-', str(v[0])))
+        		out.write(format_output(b, 'ldr/' + str(k), '+', str(v[1])))
     diff_f = diff_fields(r1, r2, exclude)
     if diff_f:
         for f in diff_f:
